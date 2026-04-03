@@ -758,7 +758,8 @@ function renderAqsTrend() {
   const trendData = data['aqs_trend'];
   if (!trendData || trendData.length < 2) return;
 
-  const rows = trendData.slice(1);
+  // 날짜 오름차순 정렬
+  const rows = trendData.slice(1).sort((a, b) => new Date(a[0]) - new Date(b[0]));
   const labels = rows.map(r => r[0]);
   const values = rows.map(r => parsePercent(r[1]));
 
@@ -829,7 +830,7 @@ function renderLang() {
       plugins: {
         legend: {
           position: 'right',
-          labels: { color: '#6b6b80', font: { family: 'DM Mono', size: 11 }, padding: 16 }
+          labels: { color: '#e8e8f0', font: { family: 'DM Mono', size: 13 }, padding: 16 }
         }
       }
     }
@@ -875,7 +876,8 @@ function renderCategory() {
   if (!trendData || trendData.length < 4) return;
 
   const catNames = trendData[0].slice(1);
-  const trendRows = trendData.slice(3);
+  // 날짜 오름차순 정렬
+  const trendRows = trendData.slice(3).sort((a, b) => new Date(a[0]) - new Date(b[0]));
   const labels = trendRows.map(r => r[0]);
   const colors = ['#C4B5FD', '#6cffce', '#ff6c8a', '#A78BFA'];
 
