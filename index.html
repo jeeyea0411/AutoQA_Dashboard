@@ -633,24 +633,24 @@
 // 구글 시트 탭별 URL 기본값
 const SHEET_BASE_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQnzar0JN6znWUleuptg6v7faacC2XGcSCgCGGMLlw_Av9Lq6D39lYxt6hZvgXpDTX1G8U4l34RfJJF/pub?output=csv';
 
-// 탭 이름 매핑
+// 탭 gid 매핑
 const TABS = {
-  'aqs':           'AQS',
-  'aqs_trend':     'AQS_트렌드',
-  'auto_conv':     '자동검토_대화수',
-  'manual_conv':   '수동검토_대화수',
-  'cat_insight':   '카테고리_인사이트',
-  'cat_trend':     '카테고리_트렌드',
-  'lang':          '언어_분포',
-  'update_time':   '업데이트_시간',
+  'aqs':         '2096987512',
+  'aqs_trend':   '326176042',
+  'auto_conv':   '1222909330',
+  'manual_conv': '2038971274',
+  'cat_insight': '2017686568',
+  'cat_trend':   '931844269',
+  'lang':        '1608718137',
+  'update_time': '618600917',
 };
 
 let data = {};
 let charts = {};
 
 // 구글 시트에서 데이터 불러오기
-async function fetchTab(tabName) {
-  const url = SHEET_BASE_URL + '&gid=&sheet=' + encodeURIComponent(tabName) + '&t=' + Date.now();
+async function fetchTab(gid) {
+  const url = SHEET_BASE_URL + '&gid=' + gid + '&t=' + Date.now();
   try {
     const res = await fetch(url);
     const text = await res.text();
@@ -672,9 +672,9 @@ async function loadFromSheets() {
 
   try {
     const entries = Object.entries(TABS);
-    for (const [key, tabName] of entries) {
-      status.textContent = tabName + ' 로딩 중...';
-      const result = await fetchTab(tabName);
+    for (const [key, gid] of entries) {
+      status.textContent = key + ' 로딩 중...';
+      const result = await fetchTab(gid);
       if (result) data[key] = result;
     }
     renderDashboard();
